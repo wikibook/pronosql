@@ -1,0 +1,8 @@
+use mydb
+db.contacts.insert({ name:"John Doe", organization:"Great Co", email:"john.doe@example.com" });
+db.contacts.insert({ name:"Wei Chin", company:"Work Well", phone:"123-456-7890" });
+db.contacts.find();
+var doc = db.contacts.findOne({ _id:ObjectId("4d2bbb43febd3e2b32bed965") });
+doc.email = "wei.chin@example.com";
+db.contacts.save(doc);
+db.contacts.find();

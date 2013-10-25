@@ -1,0 +1,15 @@
+var map = function() {
+  emit(this.stock_symbol, { stock_price_high: this.stock_price_high });
+};
+
+var reduce = function(key, values) {
+  var highest_price = 0.0;
+  values.forEach(function(doc) {
+    if( typeof doc.stock_price_high != "undefined") {
+      print("doc.stock_price_high" + doc.stock_price_high);
+      if (parseFloat(doc.stock_price_high) > highest_price) { highest_price = parseFloat(doc.stock_price_high); print("highest_price" + highest_price); }
+    }
+  });
+  return { highest_stock_price: highest_price };
+};
+

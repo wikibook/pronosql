@@ -1,0 +1,82 @@
+t = {
+  order_date: new Date(), "line_items": [
+  {
+    item : {
+      name: "latte",
+      unit_price: 4.00 
+    },
+    quantity: 1 
+  },
+  {
+    item: {
+      name: "cappuccino",
+      unit_price: 4.25 
+      },
+      quantity: 1 
+    },
+  {
+    item: {
+      name: "regular",
+      unit_price: 2.00 
+    },
+    quantity: 2 
+  }
+  ] 
+};
+db.orders.save(t);
+db.orders.find();
+t2 = {
+  order_date: new Date(), "line_items": [
+  {
+    "item_name":"latte", 
+    "quantity":1
+  }, 
+  {
+    "item_name":"cappuccino",
+    "quantity":1 
+  },
+  {
+    "item_name":"regular",
+    "quantity":2 
+  }
+  ] 
+};
+db.orders2.save(t2);
+db.orders2.find();
+p1 = {
+  "_id": "latte",
+  "unit_price":4
+};
+db.products.save(p1);
+db.products.find();
+order1 = db.orders2.findOne();
+db.products.findOne( { _id: order1.line_items[0].item_name } );
+p4 = {"name":"latte", "unit_price":4};
+p5 = {
+  "name": "cappuccino",
+  "unit_price":4.25
+};
+p6 = {
+  "name": "regular", 
+  "unit_price":2
+};
+db.products.find();
+t3 = {
+  order_date: new Date(), 
+  "line_items": [
+  {
+    "item_name": new DBRef('products2', p4._id),
+    "quantity":1
+  },
+  {
+    "item_name": new DBRef('products2', p5._id),
+    "quantity":1
+  },
+  {
+    "item_name": new DBRef('products2', p6._id),
+    "quantity":2
+  }
+  ]
+};
+db.orders3.save(t3);
+

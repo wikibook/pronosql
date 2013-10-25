@@ -1,0 +1,13 @@
+SHOW TABLES;
+CREATE TABLE books (isbn INT, title STRING);
+DESCRIBE books;
+CREATE TABLE users (id INT, name STRING) PARTITIONED BY (vcol STRING);
+DESCRIBE users;
+SHOW TABLES;
+ALTER TABLE books ADD COLUMNS (author STRING, category STRING);
+DESCRIBE books;
+ALTER TABLE books CHANGE author author ARRAY<STRING> COMMENT "multi-valued";
+DESCRIBE books;
+ALTER TABLE books RENAME TO published_contents;
+DESCRIBE published_contents;
+DESCRIBE books;

@@ -1,0 +1,11 @@
+db.movies.dataSize();
+db.movies.storageSize();
+db.movies.totalSize();
+db.system.namespaces.find();
+db.movies.$_id_.dataSize(); 
+db.movies.$_id_.storageSize();
+db.movies.$_id_.totalSize();  
+db.movies.totalIndexSize();
+db.movies.validate();
+ls -sk1 ~/data/db
+

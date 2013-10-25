@@ -1,0 +1,5 @@
+Contents of ch06.zip (compressed archive of code download for Chapter 06):
+movielens_dataloader.rb
+movielens_queries.txt
+HBaseConnector.java
+nyc_parking_data_loader.py

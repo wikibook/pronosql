@@ -1,0 +1,33 @@
+{
+  "_id":"_design/marketdata",
+  "language": "javascript",
+  "views": {
+    "all": {
+      "map": "function(doc) { emit(null, doc) }"
+    },
+    "highest_price_per_stock": {
+      "map": "function(doc) { emit(doc.stock_symbol, doc.stock_price_high) }",
+      "reduce": "function(key, values) { 
+        highest_price = 0.0;
+        for(var i=0; i<values.length; i++) {
+          if( (typeof values[i] != 'undefined') && (parseFloat(values[i]) > highest_price) ) {
+                highest_price = parseFloat(values[i]);
+          }
+        }
+        return highest_price;
+      }"
+    },
+    "lowest_price_per_stock_per_year": {
+      "map": "function(doc) { emit([doc.stock_symbol, doc.date.substr(0,4)], doc.stock_price_low) }",
+      "reduce": "function(key, values) { 
+        lowest_price = parseFloat(values[0]);
+        for(var i=0; i<values.length; i++) {
+          if( (typeof values[i] != 'undefined') && (parseFloat(values[i]) < lowest_price) ) {
+                lowest_price = parseFloat(values[i]);
+          }
+        }
+        return lowest_price;
+      }"
+    }
+  }
+}

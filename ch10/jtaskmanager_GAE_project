@@ -1,0 +1,112 @@
+//class Task
+
+package taskmanager;
+
+import com.google.appengine.api.datastore.Key;
+import java.util.Date;
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+
+@PersistenceCapable
+public class Task {
+    @PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+    private Key key;
+
+    @Persistent
+    private String name;
+
+    @Persistent
+    private String description;
+
+    @Persistent
+    private Date startDate;
+    
+    @Persistent
+    private String status;
+
+    public Greeting(String name, String description, Date startDate, String status) {
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.status = status;
+    }
+
+    public Key getKey() {
+        return key;
+    }
+
+    public User getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+    
+    public String getStatus() {
+        return status;
+    }    
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
+    }
+}
+
+//class PMF
+
+package taskmanager;
+
+import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManagerFactory;
+
+public final class PMF {
+    private static final PersistenceManagerFactory pmfInstance =
+        JDOHelper.getPersistenceManagerFactory("transactions-optional");
+
+    private PMF() {}
+
+    public static PersistenceManagerFactory get() {
+        return pmfInstance;
+    }
+}
+
+//save the object
+
+String name = "task1";
+String description = "a task";
+Date startDate = new Date();
+String status = "task created";
+
+Task task = new Task(name, description, startDate, status);
+PersistenceManager pm = PMF.get().getPersistenceManager();
+try {
+    pm.makePersistent(task);
+    } finally {
+    pm.close();
+
+//Querying using JDO QL
+
+PersistenceManager pm = PMF.get().getPersistenceManager();
+String query = "select from " + Task.class.getName();
+List<Task> tasks = (List<Task>) pm.newQuery(query).execute();
+
+

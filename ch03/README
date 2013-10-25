@@ -1,0 +1,10 @@
+Contents of ch03.zip (compressed archive of code download for Chapter 03):
+apache_log_parser.py
+apache_log_parser_ mongodb.py
+books_and_tags.txt
+blogposts.txt
+schema-blogposts.txt
+cassandra_blogposts.txt
+JavaMongoDBClient.java
+HBaseConnector.java
+phpcassa_example.php

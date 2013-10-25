@@ -1,0 +1,17 @@
+All code in the downloadable bundle is for the purpose of illustration and instruction only. The code
+examples included are just small samples, often focusing on a single function or feature of a NoSQL 
+product. Most code is tested within a development environment but is offered as-is, under no implicit 
+or explicit warranty.A lot of NoSQL products are still evolving rapidly and so its possible some of 
+the API(s) and function calls become deprecated by the time you run this code. Please verify the 
+version of the software you are running against the one mentioned in the book, 
+Professional NoSQL (Wiley, 2011), before we start debugging the code, if and when you may have 
+problems running it successfully.
+
+The downloadable code for each chapter of the book, Professional NoSQL (Wiley, 2011), is available
+in a separate zip archive file. Each zip archive file is named as Ch<Chapter#>.zip, where Chapter# is
+the chapter number. The code download includes commands to be typed in the interactive shell, programs
+that can run as standalone applications, and programs that could be included in larger programs.
+
+Commands to be run via the interactive shell are, in most cases, bundled together in a text file.
+The names of such text files end with a .txt extension. The downloadable code includes runnable
+Java, Python, Ruby, and PHP programs.

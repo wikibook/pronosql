@@ -1,0 +1,7 @@
+Contents of ch02.zip (compressed archive of code download for Chapter 02):
+schema-cardatastore.txt
+ConnectToMongoDB.java
+connect_to_mongodb.php
+connect_to_mongodb.rb
+connect_to_mongodb.py
+query_cardatastore_using_thrift.py

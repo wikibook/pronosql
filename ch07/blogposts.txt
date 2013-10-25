@@ -1,0 +1,39 @@
+{
+    “post” : {
+        “title”: “an interesting blog post”,
+        “author”: “a blogger”,
+        “body”: “interesting content”,
+    },
+    “multimedia”: {
+        “header”: header.png,
+        “body”: body.mpeg,
+    },
+}
+or
+{
+    “post” : {
+        “title”: “yet an interesting blog post”,
+        “author”: “another blogger”,
+        “body”: “interesting content”,
+    },
+    “multimedia”: {
+        “body-image”: body_image.png,
+        “body-video”  : body_video.mpeg,
+    },
+}
+
+create 'blogposts', 'post', 'multimedia'
+put 'blogposts', 'post1', 'post:title', 'an interesting blog post'
+put 'blogposts', 'post1', 'post:author', 'a blogger'
+put 'blogposts', 'post1', 'post:body', 'interesting content'
+put 'blogposts', 'post1', 'multimedia:header', 'header.png'
+put 'blogposts', 'post1', 'multimedia:body', 'body.mpeg'
+put 'blogposts', 'post2', 'post:title', 'yet an interesting blog post'
+put 'blogposts', 'post2', 'post:title', 'yet another interesting blog post'
+put 'blogposts', 'post2', 'post:author', 'another blogger'
+put 'blogposts', 'post2', 'post:body', 'interesting content'
+put 'blogposts', 'post2', 'multimedia:body-image', 'body_image.png'
+put 'blogposts', 'post2', 'multimedia:body-video', 'body_video.mpeg'
+
+get 'blogposts', 'post1'
+

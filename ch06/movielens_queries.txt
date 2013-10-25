@@ -1,0 +1,51 @@
+var map = function() {
+  emit({ gender:this.gender }, { count:1 });
+  };
+  
+var reduce = function(key, values) {
+  var count = 0;
+  values.forEach(function(v) {
+  count += v['count'];
+  });
+   
+  return { count:count };
+  };
+  
+var ratings_respondents_by_gender = db.users.mapReduce(map, reduce);
+db[ratings_respondents_by_gender.result].find();
+db.users.find({ "gender":"F" }).count();
+db.users.find({ "gender":"M" }).count();
+var map = function() {
+  emit({ movie_id:this.movie_id, rating:this.rating }, { count:1 });
+  };
+var reduce = function(key, values) {
+  var count = 0;
+  values.forEach(function(v) {
+  count += v['count'];
+  });
+ 
+  return { count: count };
+  };
+var group_by_movies_by_rating = db.ratings.mapReduce(map, reduce);
+db[group_by_movies_by_rating.result].find();
+db[group_by_movies_by_rating.result].find({ "_id.movie_id":1721 });
+var map = function() {
+  emit({ movie_id:this.movie_id }, { rating:this.rating, count:1 });
+  };
+
+var reduce = function(key, values) {
+  var sum = 0;
+  var count = 0;
+  values.forEach(function(v) {
+  sum += v['rating'];
+  count += v['count'];
+  });
+
+  return { average:(sum/count) };
+  };
+var average_rating_per_movie = db.ratings.mapReduce(map, reduce);
+db[average_rating_per_movie.result].find();
+
+
+
+

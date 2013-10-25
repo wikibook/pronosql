@@ -1,0 +1,33 @@
+{
+  "post" : {
+    "title": "an interesting blog post", 
+    "author": "a blogger",
+    "body": "interesting content",
+  }, 
+  "multimedia": {
+    "header": header.png,
+    "body": body.mpeg, 
+  },
+}
+
+
+{
+  "post" : {
+    "title": "yet an interesting blog post", 
+    "author": "another blogger",
+    "body": "interesting content",
+  }, 
+  "multimedia": {
+    "body-image": body_image.png,
+    "body-video" : body_video.mpeg, 
+  },
+}
+
+get 'blogposts', 'post1'
+
+get 'blogposts', 'post2'
+
+get 'blogposts', 'post1', { COLUMN=>'post:title' }
+
+get 'blogposts', 'post2', { COLUMN=>'post:title', VERSIONS=>2 }
+

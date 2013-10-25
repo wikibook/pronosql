@@ -1,0 +1,99 @@
+CREATE TABLE ratings(
+  userid INT,
+  movieid INT,
+  rating INT,
+  tstamp STRING)
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '#'
+  STORED AS TEXTFILE;
+  
+LOAD DATA LOCAL INPATH '/path/to/ratings.dat.hash_delimited' 
+  OVERWRITE INTO TABLE ratings;
+  
+SELECT COUNT(*) FROM ratings;
+
+CREATE TABLE movies(
+  movieid INT,
+  title STRING,
+  genres STRING)
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '#'
+  STORED AS TEXTFILE;
+  
+CREATE TABLE movies_2(
+  movieid INT,
+  title STRING,
+  genres ARRAY<STRING>)
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '#'
+  COLLECTION ITEMS TERMINATED BY '|'
+  STORED AS TEXTFILE;
+  
+LOAD DATA LOCAL INPATH '/path/to/movies.dat.hash_delimited'
+  OVERWRITE INTO TABLE movies_2;
+  
+SELECT * FROM movies_2 LIMIT 5;
+
+CREATE TABLE users(
+  userid INT,
+  gender STRING,
+  age INT,
+  occupation INT,
+  zipcode STRING)
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '#'
+  STORED AS TEXTFILE;
+  
+CREATE TABLE users_2(
+  userid INT,
+  gender STRING,
+  age INT,
+  occupation STRING,
+  zipcode STRING)
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '#'
+  STORED AS TEXTFILE;
+  
+add FILE /Users/<username>/workspace/hadoop_workspace/hive_workspace/occupation_mapper.py;
+
+INSERT OVERWRITE TABLE users_2
+  SELECT
+  TRANSFORM (userid, gender, age, occupation, zipcode)
+  USING 'python occupation_mapper.py'
+  AS (userid, gender, age, occupation_str, zipcode)
+  FROM users;
+  
+SELECT * FROM movies LIMIT 5;
+
+SELECT * FROM ratings
+  WHERE movieid = 1;
+  
+SELECT COUNT(*) FROM ratings
+  WHERE movieid < 10;
+
+SELECT COUNT(*) FROM ratings
+  WHERE movieid = 1 and rating = 5;
+
+SELECT title FROM movies
+  WHERE title = `^Toy+`;
+
+SELECT `*+(id)` FROM ratings
+  WHERE movieid = 1;
+
+SELECT ratings.rating, COUNT(ratings.rating)
+  FROM ratings
+  WHERE movieid = 1
+  GROUP BY ratings.rating;
+
+SELECT * FROM movies 
+  ORDER BY movieid DESC;
+
+
+
+
+
+
+
+
+
+

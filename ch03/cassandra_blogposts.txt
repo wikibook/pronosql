@@ -1,0 +1,13 @@
+use BlogPosts;
+set post['post1']['title'] = 'an interesting blog post';
+set post['post1']['author'] = 'a blogger';
+set post['post1']['body'] = 'interesting content';
+set multimedia['post1']['header'] = 'header.png';
+set multimedia['post1']['body'] = 'body.mpeg';
+set post['post2']['title'] = 'yet an interesting blog post';
+set post['post2']['author'] = 'another blogger';
+set post['post2']['body'] = 'interesting content';
+set multimedia['post2']['body-image'] = 'body_image.png';
+set multimedia['post2']['body-video'] = 'body_video.mpeg';
+get post['post1'];
+get multimedia['post2']['body-video'];

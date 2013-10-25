@@ -1,0 +1,9 @@
+Contents of ch11.zip (compressed archive of code download for Chapter 11):
+infochimps_nyse_data_loader.sh
+manipulate_nyse_market_data.txt
+upload_nyse_market_data_couchdb.py
+mydesign.json
+NyseMarketDataMapper.java
+NyseMarketDataReducer.java
+NyseMarketDataDriver.java
+NyseMarketDataSampleApplication.java

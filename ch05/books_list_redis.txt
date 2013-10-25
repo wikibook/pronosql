@@ -1,0 +1,2 @@
+./redis-cli lpush list_of_books 'MongoDB: The Definitive Guide'
+./redis-cli lrange list_of_books  0 -1

@@ -1,0 +1,122 @@
+import datetime
+from google.appengine.ext import db
+
+class Task(db.Model):
+  name = db.StringProperty(required=True)
+  description = db.StringProperty()
+  start_date = db.DateProperty(required=True)
+  due_date = db.DateProperty()
+  end_date = db.DateProperty()
+  tags = db.StringListProperty()
+
+task = Task(name = "Design task manager app",
+            description = "Design the task management application. Create the initial blueprint and the app architecture.",
+            start_date = datetime.datetime.now().date())
+task.put()
+
+//Expando
+
+import datetime
+from google.appengine.ext import db
+
+class Task(db.Expando):
+  name = db.StringProperty(required=True)
+  description = db.StringProperty()
+  start_date = db.DateProperty(required=True)
+  due_date = db.DateProperty()
+  end_date = db.DateProperty()
+  tags = db.StringListProperty()
+  
+t1 = Task(name="task1", start_date=datetime.datetime.now().date())
+t1.description = "this is task 1"
+t1.tags = ["important", "sample"]
+t1.collaborator = "John Doe"
+
+t2 = Task(name="task2", start_date=datetime.datetime.now().date())
+t2.description = "this is task 2"
+t2.tags = ["important", "sample"]
+t2.resources = ["resource1", "resource2"]
+
+//PolyModel
+
+from google.appengine.ext import db
+from google.appengine.ext.db import polymodel
+
+class Task(polymodel.PolyModel):
+  name = db.StringProperty(required=True)
+  description = db.StringProperty()
+  start_date = db.DateProperty(required=True)
+  due_date = db.DateProperty()
+  end_date = db.DateProperty()
+  tags = db.StringListProperty()
+  
+class IndividualTask(Task):
+  owner = db.StringProperty()
+  
+class TeamTask(Task):
+  team_name = db.StringProperty()
+  collaborators = db.StringListProperty()
+  
+//Queries and Indexes
+
+q = db.GqlQuery("SELECT * FROM Task" +
+                 "WHERE start_date = :1", datetime.datetime(2011, 1, 1, 12, 0, 0).date())
+results = q.fetch(5)
+for task in results:
+  print "Task name: %s" % (task.name)
+
+q = Task.all()
+q.filter("start_date =", datetime.datetime(2011, 1, 1, 12, 0, 0).date())
+results = q.fetch(5)
+for task in results:
+  print "Task name: %s" % (task.name)
+
+q = db.GqlQuery("SELECT * FROM Task" +
+                "WHERE start_date = :1" +
+                "ORDER BY name", datetime.datetime(2011, 1, 1, 12, 0, 0).date())
+
+q = db.GqlQuery("SELECT * FROM Task" +
+                "WHERE start_date >= :1" +
+                "tags IN :2" +
+                "ORDER BY start_date", datetime.datetime(2011, 1, 1, 12, 0, 0).date(), ["Important", "Sample"])
+
+indexes:
+- kind: Task
+  properties:
+  - name: start_date
+  - name: tags
+
+q = db.GqlQuery("SELECT * FROM Task" +
+                "WHERE start_date = :1" +
+                "ORDER BY name", datetime.datetime(2011, 1, 1, 12, 0, 0).date())
+for task in q:
+  print "Task name: %s" % (task.name)
+
+//Listing 10-1: An App Engine Python Function Invoked within a Transaction
+
+import datetime
+from google.appengine.ext import db
+
+class Task(db.Model):
+  name = db.StringProperty(required=True)
+  description = db.StringProperty()
+  start_date = db.DateProperty(required=True)
+  due_date = db.DateProperty()
+  end_date = db.DateProperty()
+  tags = db.StringListProperty()
+  status = db.StringProperty(choices=('in progress', 'complete', 'not started'))
+
+def update_as_complete(key, status):
+  obj = db.get(key)
+  if status == 'complete':
+    obj.status = 'complete'
+    obj.end_date = datetime.datetime.now().day()
+  
+  obj.put()
+
+q = db.GqlQuery("SELECT * FROM Task" +
+                "WHERE name = :1", "task1")
+completed_task = q.get()
+
+db.run_in_transaction(update_as_complete, completed_task.key(), "complete")
+

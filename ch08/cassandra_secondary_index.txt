@@ -1,0 +1,11 @@
+update column family Cars with comparator=UTF8Type
+  and column_metadata=[{column_name: make, validation_class: UTF8Type, index_type: KEYS},
+  {column_name: model, validation_class: UTF8Type}];
+
+get Cars where make = 'toyota';
+
+get Cars where model = 'prius 3';
+
+get Cars where model = 'prius 3' and make = 'toyota';
+
+
